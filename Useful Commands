@@ -1,0 +1,8 @@
+gcc -o output input.c // Compiles C code
+cat > textfile.ext // Creates a new text file
+./file // Cuns c programs
+python3.5 // Opens python interpreter
+python file.py // Runs python script
+mkdir location/name // Creates directories
+mv old_location/old_name.old_ext new_location/new_name.new_ext // Moves 	files and renames them
+git init / add . / commit -m "Commit message." / push // Basic Git
