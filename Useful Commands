@@ -11,4 +11,4 @@ fsck -fy /dev/sda1 // VM Reboots
 sudo apt-get clean/update/upgrade // Updates Ubuntu
 
 git init / remote add origin https://github.com/bscheibe/asdf.git
-// creates a new repo
+// creates a new repo.
