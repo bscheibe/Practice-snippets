@@ -7,4 +7,8 @@ mkdir location/name // Creates directories
 mv old_location/old_name.old_ext new_location/new_name.new_ext // Moves 	files and renames them
 git init / add . / commit -m "Commit message." / push // Basic Git
 sudo apt install <package> // Installs programs onto Ubuntu
+fsck -fy /dev/sda1 // VM Reboots
+sudo apt-get clean/update/upgrade // Updates Ubuntu
 
+git init / remote add origin https://github.com/bscheibe/asdf.git
+// creates a new repo
