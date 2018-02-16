@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 
 
-public class Model {
+public class TowerDefense {
 
 	private ArrayList<Enemy> enemies;
 	private Node first;
@@ -21,15 +21,17 @@ public class Model {
 	private MyInt power;
 	private int frequency;
 	private MyInt health;
+	final static int width = 400;
+	final static int height = 300;
 
 	public static void main(String[] args) {	
 
-		Model model = new Model(5);
+		TowerDefense td = new TowerDefense(5);
 
-		View view = new View(model.enemies,model.first, 					model.score, model.towers, 						model.power);
+		View view = new View(td.enemies,td.first, 					td.score, td.towers, 						td.power);
 
-		while (model.health.getValue() > 0) {
-			model.tick();
+		while (td.health.getValue() > 0) {
+			td.tick();
 			view.repaint();
 			try {
 				Thread.sleep(14);
@@ -46,7 +48,7 @@ public class Model {
 
 
 
-	public Model(int gameSize) {
+	public TowerDefense(int gameSize) {
 		
 		frequency = 100;
 		first = new Node(0,0);	
@@ -65,8 +67,9 @@ public class Model {
 			tempx = 0;			
 			tempy = 0;			
 			while (tempx == 0 && 
-				(tempy == 0 || tempy == 300)) {	
-				tempx =	rand.nextInt(400); 					tempy = rand.nextInt(300); 
+				(tempy == 0 || tempy == TowerDefense.height)) {	
+				tempx =	rand.nextInt(TowerDefense.width); 					
+				tempy = rand.nextInt(TowerDefense.height); 
 			}
 			temp.addNext(new Node(tempx, tempy));
 			temp = temp.getNext();
@@ -309,18 +312,23 @@ class View extends JFrame  implements MouseListener{
 	MyInt power;
 	ArrayList<Tower> towers;
 	boolean isGameOver;
+	private int width;
+	private int height;
 
 	
 
-	public View(ArrayList<Enemy> enemies, Node first, MyInt score, 				ArrayList<Tower> towers, MyInt power) {
+	public View(ArrayList<Enemy> enemies, Node first, MyInt score, 				
+		ArrayList<Tower> towers, MyInt power) {
 
 		this.towers = towers;	
 		isGameOver = false;
 		this.enemies = enemies;
 		this.first = first;
 		this.power = power;
+		width = TowerDefense.width;
+		height = TowerDefense.height;
 		
-		panel = new GamePanel();
+		panel = new GamePanel(width,height);
 		getContentPane().add(panel);
 		
 		panel.enemies = enemies;
@@ -332,9 +340,9 @@ class View extends JFrame  implements MouseListener{
 
 		setBackground(Color.black);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(400,300);
+		setSize(TowerDefense.width,TowerDefense.height);
 
-	    panel.setPreferredSize(new Dimension(411,311));
+	    panel.setPreferredSize(new Dimension(TowerDefense.width + 11, TowerDefense.height + 11));
 	    panel.setOpaque(true);
 	    
 	    pack();  
@@ -387,7 +395,6 @@ class View extends JFrame  implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println("test");
 		if (power.getValue() == 320) {
 			towers.add(new Tower(e.getX()-15,e.getY()-35));
 			power.addValue(-320);
@@ -410,7 +417,17 @@ class GamePanel extends JPanel{
 	Node first;	
 	MyInt score;	
 	MyInt power;
-	boolean isGameOver;	
+	boolean isGameOver;
+	private int width;
+	private int height;	
+	
+	public GamePanel(int width, int height) {
+		
+		super();
+		this.width = width;
+		this.height = height;
+		
+	}
 
 	public void paintComponent(Graphics g) {
 	
@@ -419,14 +436,14 @@ class GamePanel extends JPanel{
 		if (isGameOver) {
 			g.setFont(new Font("Verdana", Font.BOLD, 35));
 			g.setColor(Color.WHITE);
-			g.drawString("GAME OVER!", 19, 161);
+			g.drawString("GAME OVER!", (width / 2) - 110 , ((height + 20) / 2) + 1);
 			g.setColor(Color.RED);
-			g.drawString("GAME OVER!", 20, 160);
+			g.drawString("GAME OVER!", (width / 2) - 110, (height + 20) / 2);
 		}
 		
 		g.setFont(new Font("Verdana", Font.BOLD, 15));	
 		g.setColor(Color.LIGHT_GRAY);		
-		g.drawString(""+score.getValue(), 380, 310);
+		g.drawString(""+score.getValue(), width - 20, height + 10);
 
 		for (Enemy e : enemies) {			
 			g.setColor(e.color);
@@ -457,26 +474,26 @@ class GamePanel extends JPanel{
 		g.drawOval(temp.getXloc(), temp.getYloc(), 4, 4);
 		g.setColor(Color.LIGHT_GRAY);		
 		int temppower = power.getValue();		
-		g.drawString("Power: ", 0, 310);
+		g.drawString("Power: ", 0, height + 10);
 		
 		if (temppower%80 > 40) {
 			g.setColor(Color.RED);
-			g.drawString("CHARGING", 60, 310);
+			g.drawString("CHARGING", 60, height + 10);
 		}
 		
 		if (temppower == 320) {
 			g.setColor(Color.GREEN);
-			g.drawString("CHARGED", 60, 310);
+			g.drawString("CHARGED", 60, height + 10);
 		}
 		
 		g.setColor(Color.LIGHT_GRAY);		
-		g.drawRect(1, 290, 320, 4);		
+		g.drawRect(1, height - 10, height + 20, 4);		
 		g.setColor(Color.pink);
 		
-		if (temppower == 320)
+		if (temppower == height + 20)
 			g.setColor(Color.green);
 		
-		g.drawRect(1, 290, temppower, 4);
+		g.drawRect(1, height - 10, temppower, 4);
 
 	}
 	
