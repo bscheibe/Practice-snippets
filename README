@@ -1,8 +1,4 @@
-Hello,
+This repository is a collection of small programs, each demonstrating individual concepts. 
+I am writing all of them on Linux to familiarize myself with virtual machines, Git, and the UNIX command line.
 
-	This repository is a collection of small programs, each demonstrating individual concepts. I am writing all of them on Linux to familiarize myself with virtual machines, Git, and the UNIX command line.
-
-	Everything will be in one place on this repo so that I do not have to keep track of multiple locations for my learning, and to provent catastrophe.
-
-Regards,
-Scheibe
+Separate languages will be in one place on this repo so that I do not have to keep track of multiple locations for my learning, and to provent catastrophe.
